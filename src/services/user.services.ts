@@ -7,13 +7,13 @@ export class UserService {
   }
 
   getUsers() {
-    return this.repo.findAllUsers();
+    return this.repo.getUsers();
   }
-  updateUser(id: number, name: string, email: string) {
+  updateUser(id: string, name: string, email: string) {
     return this.repo.updateUser(id, name, email);
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     return this.repo.deleteUser(id);
   }
 }

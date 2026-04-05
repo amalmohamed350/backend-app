@@ -1,27 +1,20 @@
 import express from "express";
-import { connectDB, sequelize } from "./config/databases";
-import userRoutes from "./routes/user.routes";
-import path from "path";
+import { connectDB } from "./config/db";
+import userApis from "./apis/user.apis";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const app = express();
+
+// Middleware to parse JSON
 app.use(express.json());
 
-// Connect to DB
-connectDB();
+// Register routes
+app.use("/api/users", userApis); // <-- attach the routes
 
-// Sync models (creates tables automatically)
-sequelize.sync({ alter: true }).then(() => {
-  console.log("✅ All models synchronized with DB");
+// Start server after connecting to DB
+connectDB().then(() => {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 });
-
-// Routes
-app.use("/api", userRoutes);
-app.use(express.static("public"));
-app.listen(5000, "0.0.0.0", () => {
-  console.log("Server running on port 5000");
-});
-
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

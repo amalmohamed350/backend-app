@@ -1,19 +1,19 @@
-import { User } from "../models/user.model";
+import { User } from "../models/user";
 
 export class UserRepository {
   async createUser(name: string, email: string) {
     return User.create({ name, email });
   }
 
-  async findAllUsers() {
-    return User.findAll();
+  async getUsers() {
+    return User.find();
   }
 
-  async updateUser(id: number, name: string, email: string) {
-    return User.update({ name, email }, { where: { id } });
+  async deleteUser(id: string) {
+    return User.findByIdAndDelete(id);
   }
 
-  async deleteUser(id: number) {
-    return User.destroy({ where: { id } });
+  async updateUser(id: string, name: string, email: string) {
+    return User.findByIdAndUpdate(id, { name, email }, { new: true });
   }
 }
