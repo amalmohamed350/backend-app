@@ -3,6 +3,8 @@ import { connectDB } from "./config/db";
 import userApis from "./apis/user.apis";
 import companyApis from "./apis/company.apis";
 import dotenv from "dotenv";
+import transactionRoutes from "./apis/transactions.apis";
+
 
 dotenv.config();
 
@@ -10,8 +12,11 @@ const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use("/api", transactionRoutes);
 
-
+app.get("/", (_req, res) => {
+  res.send("🚀 API is running...");
+});
 // Register routes
 app.use("/api/users", userApis); // <-- attach the routes
 app.use("/api/company", companyApis); // <-- attach the routes

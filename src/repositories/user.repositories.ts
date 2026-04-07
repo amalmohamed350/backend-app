@@ -1,5 +1,12 @@
 import { User } from "../models/user";
 
+
+export class userRepository {
+  async createUser(name: string, email: string, session: any) {
+    return User.create([{ name, email }], { session });
+  }
+}
+
 export class UserRepository {
   async createUser(name: string, email: string) {
     return User.create({ name, email });
